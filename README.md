@@ -64,9 +64,11 @@ npm run deploy
 ## 📸 Screenshots
 
 ### 1. Compile Output
-<!-- Attach your screenshot showing successful compilation output with circuits listed here -->
-*(Replace this line with your screenshot of the compile output)*
+*Successful contract compilation showing generated ZK circuits and verification keys into the `managed/` directory:*
+
+![Compile Output](screenshots/compile_output.png)
 
 ### 2. Contract Deployed
-<!-- Attach your screenshot showing deployed contract address on Preprod/Preview here -->
-*(Replace this line with your screenshot showing the deployed contract address)*
+*Contract successfully proved, submitted, and deployed to Midnight Preprod network with visible contract address:*
+
+![Contract Deployed](screenshots/contract_deployed.png)
