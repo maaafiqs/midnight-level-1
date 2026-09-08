@@ -4,7 +4,7 @@
   "description": "A Zero Knowledge number guessing game using Midnight Compact",
   "main": "index.js",
   "scripts": {
-    "compile": "compactc --compiler-options \"--network=preprod\" contracts/ZkNumberGuesser.compact",
+    "compile": "wsl bash ./compile.sh",
     "test": "jest"
   },
   "keywords": [
