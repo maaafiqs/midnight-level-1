@@ -1,0 +1,30 @@
+pragma compact-1;
+
+export ledger state: {
+  is_solved: Cell<Boolean>,
+  attempts: Cell<Uint<32>>
+}
+
+export constructor() {
+  state.is_solved = false;
+  state.attempts = 0;
+}
+
+export circuit guess_number(guess: Uint<32>): [] {
+  // The secret number is hardcoded to 42 for simplicity
+  let secret_number: Uint<32> = 42;
+  
+  // Check if the guess is correct (private operation)
+  let is_correct = guess == secret_number;
+  
+  // Use disclose() deliberately to reveal only whether the guess was correct,
+  // while keeping the actual guess private.
+  let public_is_correct = disclose(is_correct);
+  
+  if (public_is_correct) {
+    state.is_solved = true;
+  }
+  
+  // Increment attempts counter
+  state.attempts = state.attempts + 1;
+}
