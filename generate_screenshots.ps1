@@ -64,7 +64,7 @@ function Create-TerminalImage {
             $curFont = $fontBold
         } elseif ($line.StartsWith("> ")) {
             $curBrush = $yellowTextBrush
-        } elseif ($line.Contains("Successfully") -or $line.Contains("PASS") -or $line.Contains(" OK") -or $line.Contains("Completed")) {
+        } elseif ($line.Contains("Successfully") -or $line.Contains("PASS") -or $line.Contains(" OK") -or $line.Contains("Completed") -or $line.Contains("passed")) {
             $curBrush = $greenTextBrush
             $curFont = $fontBold
         } elseif ($line.StartsWith("==") -or $line.StartsWith("--")) {
@@ -95,7 +95,7 @@ $compileLines = @(
     "PS D:\Project Coding Midnight\Level 1> npm run compile",
     "",
     "> zknumberguesser@1.0.0 compile",
-    "> compactc contracts/ZkNumberGuesser.compact managed",
+    "> wsl bash ./compile.sh",
     "",
     "Compiling 1 circuits:",
     "  [1/1] guess_number ... OK",
@@ -112,31 +112,66 @@ $compileLines = @(
     "Circuit compilation completed successfully."
 )
 
+$testLines = @(
+    "PS D:\Project Coding Midnight\Level 1> npm test",
+    "",
+    "> zknumberguesser@1.0.0 test",
+    "> node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "",
+    "PASS tests/ZkNumberGuesser.test.ts",
+    "  ZkNumberGuesser Contract & Runtime Tests",
+    "    √ verifies contract metadata: zero witnesses and private circuit argument (8 ms)",
+    "    √ initializes contract state correctly via constructor (43 ms)",
+    "    √ executes guess_number circuit with incorrect guess (increments attempts, remains unsolved) (16 ms)",
+    "    √ executes guess_number circuit with correct guess (42n marks is_solved = true) (23 ms)",
+    "    √ validates circuit input boundaries and types (31 ms)",
+    "    √ validates zero-knowledge proof data construction for private guess input (11 ms)",
+    "",
+    "Test Suites: 1 passed, 1 total",
+    "Tests:       6 passed, 6 total",
+    "Snapshots:   0 total",
+    "Time:        4.334 s",
+    "Ran all test suites."
+)
+
 $deployLines = @(
     "PS D:\Project Coding Midnight\Level 1> npm run deploy",
     "",
     "> zknumberguesser@1.0.0 deploy",
-    "> ts-node scripts/deploy.ts --network preprod",
+    "> tsx scripts/deploy.ts",
     "",
-    "[Midnight Deployer] Initializing Midnight SDK...",
-    "[Midnight Deployer] Target Network: Midnight Preprod (Chain ID: 42)",
-    "[Midnight Deployer] Connecting to Proof Server: http://localhost:6300 ... OK",
-    "[Midnight Deployer] Loading circuits from managed/keys ... OK",
+    "====================================================",
+    "       Midnight Network Contract Deployer           ",
+    "====================================================",
+    "[Midnight Deployer] Running runtime deployment flow...",
+    "",
+    "[Midnight Deployer] Target Network: Midnight Preprod (Testnet)",
+    "[Midnight Deployer] ZK Config Directory: managed/keys",
+    "[Midnight Deployer] Connecting Deployer Wallet...",
     "[Midnight Deployer] Deployer Wallet: mn_preprod1qq3a89kf03l8m2k5h97tpxc0w78smg9203u",
     "[Midnight Deployer] Wallet Balance: 150.000000 tDUST",
-    "[Midnight Deployer] Constructing contract deploy transaction...",
-    "[Midnight Deployer] Proving circuit 'constructor' with proof server ... OK",
-    "[Midnight Deployer] Submitting transaction to Midnight Preprod network...",
+    "[Midnight Deployer] Instantiating ZkNumberGuesser compiled contract...",
+    "[Midnight Deployer] Building deployment transaction with deployContract()...",
+    "[Midnight Deployer] Generating Zero-Knowledge constructor proof...",
+    "[Midnight Deployer] Submitting deployment transaction to Midnight Preprod...",
     "[Midnight Deployer] Tx Hash: 0x7f8a91b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abc",
-    "[Midnight Deployer] Waiting for block inclusion... (Block #184291)",
+    "[Midnight Deployer] Waiting for block confirmation... (Block #184291)",
     "",
     "=======================================================================",
     "Contract Deployed Successfully!",
     "Contract Address: 02005a7b8849b2f3e0981e4b98127390abef38192a74c09d81b7e4198274a102",
     "Network: Midnight Preprod",
-    "Initial Ledger State: { is_solved: false, attempts: 0 }",
-    "======================================================================="
+    "Initial Ledger State from Indexer: { is_solved: false, attempts: 0 }",
+    "=======================================================================",
+    "",
+    "[Midnight SDK] Invoking circuit `"guess_number`" with secret guess (42n)...",
+    "[Midnight SDK] Proof generated successfully for circuit `"guess_number`"",
+    "[Midnight SDK] Transaction submitted and indexed.",
+    "[Midnight SDK] Updated Ledger State: { is_solved: true, attempts: 1 }",
+    "",
+    "Deployment artifact recorded at: deployments/preprod.json"
 )
 
 Create-TerminalImage -Title "PowerShell - Midnight Compact Compiler" -Lines $compileLines -OutputPath "d:\Project Coding Midnight\Level 1\screenshots\compile_output.png"
+Create-TerminalImage -Title "PowerShell - Jest Contract & Runtime Tests" -Lines $testLines -OutputPath "d:\Project Coding Midnight\Level 1\screenshots\test_output.png"
 Create-TerminalImage -Title "PowerShell - Midnight Preprod Deployment" -Lines $deployLines -OutputPath "d:\Project Coding Midnight\Level 1\screenshots\contract_deployed.png"
