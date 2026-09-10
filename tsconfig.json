@@ -2,11 +2,14 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowJs": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist"
   },
-  "include": ["tests/**/*", "contracts/**/*"]
+  "include": ["tests/**/*", "contracts/**/*", "managed/**/*", "scripts/**/*"]
 }
