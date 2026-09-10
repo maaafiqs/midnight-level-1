@@ -1,0 +1,20 @@
+{
+  "contractName": "ZkNumberGuesser",
+  "contractAddress": "02005a7b8849b2f3e0981e4b98127390abef38192a74c09d81b7e4198274a102",
+  "network": "Midnight Preprod",
+  "txHash": "0x7f8a91b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abc",
+  "blockHeight": 184291,
+  "deployedAt": "2026-09-10T23:10:14.304Z",
+  "initialLedgerState": {
+    "is_solved": false,
+    "attempts": "0"
+  },
+  "updatedLedgerState": {
+    "is_solved": true,
+    "attempts": "1"
+  },
+  "circuits": [
+    "guess_number"
+  ],
+  "witnesses": []
+}
